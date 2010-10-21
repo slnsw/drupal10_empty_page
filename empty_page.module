@@ -115,7 +115,7 @@ function empty_page_empty() {
 /**
  * Get all Empty Page callbacks.
  *
- * @return $callbacks
+ * @return array $callbacks
  */
 function empty_page_get_callbacks() {
   $callbacks = array();
