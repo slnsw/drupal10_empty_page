@@ -17,7 +17,6 @@ function empty_page_perm() {
   $perms = array(
     EMPTY_PAGE_PERM_MANAGE_CALLBACKS,
   );
-  // TODO: Handle user added permissions.
   return $perms;
 }
 
@@ -74,9 +73,7 @@ function empty_page_menu() {
     $items[$callback->path] = array(
       'title' => t($callback->page_title),
       'page callback' => 'empty_page_empty',
-      // TODO: For now, just use 'access content'. Add ability to re-use existing perms or add new ones.
-      'access arguments' => array('access content'),
-      // TODO: How should the type be handled? Maybe let user choose?
+      'access callback' => TRUE,
       'type' => MENU_SUGGESTED_ITEM,
     );
   }
@@ -173,14 +170,4 @@ function empty_page_delete_callback($cid) {
 function empty_page_clear_menu_cache() {
   // Rebuild menu.
   menu_rebuild();
-}
-
-/**
- * TODO: Finish custom perm implementation.
- *
- * @return array $perms
- */
-function empty_page_get_custom_perms() {
-  // TODO: Handle user added permissions.
-  return array();
 }

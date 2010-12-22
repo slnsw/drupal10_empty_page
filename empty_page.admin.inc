@@ -130,7 +130,7 @@ function empty_page_callbacks_form(&$form_state, $cid = NULL) {
     '#type' => 'textfield',
     '#title' => t('Internal path'),
     '#description' => '',
-    '#required' => 1,
+    '#required' => TRUE,
     '#default_value' => $callback ? $callback->path : '',
   );
   $form['empty_page_basic']['empty_page_callback_page_title'] = array(
