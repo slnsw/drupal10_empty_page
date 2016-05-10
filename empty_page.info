@@ -1,4 +1,0 @@
-name = "Empty Page"
-description = "A simple empty page solution. Assists in creating empty menu callbacks, mostly used for pages that only consist of blocks."
-core = 6.x
-package = "Other"
