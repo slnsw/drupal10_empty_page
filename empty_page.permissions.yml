@@ -6,4 +6,4 @@ administer empty pages:
 view empty pages:
   title: 'View Empty Pages'
   description: 'Access the pages which are created by Empty Page.'
-  restrict access: no
+  restrict access: false
