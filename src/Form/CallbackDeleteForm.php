@@ -25,7 +25,7 @@ class CallbackDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to delete the callback for <em>:path</em>?', array(':path' => $this->callback->path));
+    return $this->t('Are you sure you want to delete the callback for <em>:path</em>?', [':path' => $this->callback->path]);
   }
 
   /**
@@ -58,7 +58,7 @@ class CallbackDeleteForm extends ConfirmFormBase {
     $callback = $this->callback;
     self::emptyPageDeleteCallback($callback->cid);
     \Drupal::service('router.builder')->rebuild();
-    drupal_set_message(t('Callback <em>:path</em> deleted.', array(':path' => $callback->path)));
+    drupal_set_message(t('Callback <em>:path</em> deleted.', [':path' => $callback->path]));
     $form_state->setRedirect('empty_page.administration');
   }
 

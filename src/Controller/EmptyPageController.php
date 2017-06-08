@@ -14,14 +14,14 @@ class EmptyPageController {
    * List out the pages created via empty page.
    */
   public function emptyPageList() {
-    $header = array(
+    $header = [
       t('INTERNAL PATH'),
-      array(
+      [
         'data' => t('Operations'),
         'colspan' => 2,
-      ),
-    );
-    $rows = array();
+      ],
+    ];
+    $rows = [];
     $callbacks = self::emptyPageGetCallbacks();
     if (!empty($callbacks)) {
       foreach ($callbacks as $cid => $callback) {
@@ -29,26 +29,26 @@ class EmptyPageController {
         $edit_url = Url::fromRoute('empty_page.edit_callback', ['cid' => $cid]);
         $delete_url = Url::fromRoute('empty_page.delete_callback', ['cid' => $cid]);
         $title = $callback->page_title ?: 'No title';
-        $row    = array(
+        $row    = [
           \Drupal::l($title, $view_url),
           Link::fromTextAndUrl(t('Edit'), $edit_url),
           Link::fromTextAndUrl(t('Delete'), $delete_url),
-        );
+        ];
         $rows[] = $row;
       }
     }
-    $table = array(
+    $table = [
       '#type' => 'table',
       '#header' => $header,
       '#rows' => $rows,
       '#empty' => t('No callbacks exist yet.'),
-    );
-    $build = array(
+    ];
+    $build = [
       '#type' => 'details',
       '#title' => 'Manage',
       '#children' => $table,
       '#open' => TRUE,
-    );
+    ];
     return $build;
   }
 
@@ -59,15 +59,15 @@ class EmptyPageController {
    *   An Array of Callbacks.
    */
   public static function emptyPageGetCallbacks() {
-    $callbacks = array();
+    $callbacks = [];
     $results = db_select('empty_page')
-      ->fields('empty_page', array('cid',
+      ->fields('empty_page', ['cid',
         'path',
         'page_title',
         'data',
         'changed',
         'created',
-      ))
+      ])
       ->orderBy('changed', 'DESC')
       ->execute();
     foreach ($results as $callback) {

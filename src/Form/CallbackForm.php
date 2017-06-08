@@ -35,29 +35,29 @@ class CallbackForm extends FormBase {
     else {
       $form_title = t('Create a new callback');
     }
-    $form['empty_page_basic'] = array(
+    $form['empty_page_basic'] = [
       '#type' => 'details',
       '#title' => $form_title,
       '#description' => '',
       '#open' => TRUE,
-    );
-    $form['empty_page_basic']['empty_page_callback_path'] = array(
+    ];
+    $form['empty_page_basic']['empty_page_callback_path'] = [
       '#type' => 'textfield',
       '#title' => t('Internal path'),
       '#description' => '',
       '#required' => 1,
       '#default_value' => $callback ? $callback->path : '',
-    );
-    $form['empty_page_basic']['empty_page_callback_page_title'] = array(
+    ];
+    $form['empty_page_basic']['empty_page_callback_page_title'] = [
       '#type' => 'textfield',
       '#title' => t('Page title'),
       '#description' => '',
       '#default_value' => $callback ? $callback->page_title : '',
-    );
-    $form['empty_page_basic']['buttons']['submit'] = array(
+    ];
+    $form['empty_page_basic']['buttons']['submit'] = [
       '#type' => 'submit',
       '#value' => $callback ? t('Save') : t('Add'),
-    );
+    ];
 
     return $form;
   }
@@ -107,13 +107,13 @@ class CallbackForm extends FormBase {
    */
   public static function emptyPageGetCallback($cid) {
     $callback = db_select('empty_page')
-      ->fields('empty_page', array('cid',
+      ->fields('empty_page', ['cid',
         'path',
         'page_title',
         'data',
         'changed',
         'created',
-      ))
+      ])
       ->condition('cid', $cid)
       ->execute()
       ->fetchObject();
@@ -131,23 +131,23 @@ class CallbackForm extends FormBase {
   public function emptyPageSaveCallback($callback) {
     if (property_exists($callback, 'cid')) {
       db_update('empty_page')
-        ->fields(array(
+        ->fields([
           'path' => $callback->path,
           'page_title' => $callback->page_title,
           'changed' => REQUEST_TIME,
-        ))
+        ])
         ->condition('cid', $callback->cid)
         ->execute();
       $ret = $callback->cid;
     }
     else {
       $id = db_insert('empty_page')
-        ->fields(array(
+        ->fields([
           'path' => $callback->path,
           'page_title' => $callback->page_title,
           'created' => REQUEST_TIME,
           'changed' => REQUEST_TIME,
-        ))
+        ])
         ->execute();
       $ret = $id;
     }

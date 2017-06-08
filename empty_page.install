@@ -16,49 +16,49 @@ function empty_page_install() {
  * Implements hook_schema().
  */
 function empty_page_schema() {
-  $schema['empty_page'] = array(
+  $schema['empty_page'] = [
     'description' => 'The base table for empty_page callbacks.',
-    'fields' => array(
-      'cid' => array(
+    'fields' => [
+      'cid' => [
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
-      ),
-      'path' => array(
+      ],
+      'path' => [
         'type' => 'varchar',
         'length' => 128,
         'not null' => TRUE,
         'default' => '',
-      ),
-      'page_title' => array(
+      ],
+      'page_title' => [
         'type' => 'varchar',
         'length' => 128,
         'not null' => TRUE,
         'default' => '',
-      ),
-      'data' => array(
+      ],
+      'data' => [
         'type' => 'text',
         'not null' => FALSE,
         'size' => 'big',
-      ),
-      'changed' => array(
+      ],
+      'changed' => [
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
-      ),
-      'created' => array(
+      ],
+      'created' => [
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
-      ),
-    ),
-    'indexes' => array(
-      'changed' => array('changed'),
-    ),
-    'unique keys' => array(
-      'cid' => array('cid'),
-    ),
-    'primary key' => array('cid'),
-  );
+      ],
+    ],
+    'indexes' => [
+      'changed' => ['changed'],
+    ],
+    'unique keys' => [
+      'cid' => ['cid'],
+    ],
+    'primary key' => ['cid'],
+  ];
   return $schema;
 }

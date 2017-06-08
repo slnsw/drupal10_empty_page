@@ -11,7 +11,7 @@ class EmptyPage {
    * Builds the empty page.
    */
   public function emptyCallback() {
-    $output = array();
+    $output = [];
     return $output;
   }
 
