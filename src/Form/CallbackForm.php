@@ -106,7 +106,7 @@ class CallbackForm extends FormBase {
    *   The Callback Object.
    */
   public static function emptyPageGetCallback($cid) {
-    $callback = db_select('empty_page')
+    $callback = \Drupal::database()->select('empty_page')
       ->fields('empty_page', ['cid',
         'path',
         'page_title',
@@ -130,7 +130,7 @@ class CallbackForm extends FormBase {
    */
   public function emptyPageSaveCallback($callback) {
     if (property_exists($callback, 'cid')) {
-      db_update('empty_page')
+      \Drupal::database()->update('empty_page')
         ->fields([
           'path' => $callback->path,
           'page_title' => $callback->page_title,
@@ -141,7 +141,7 @@ class CallbackForm extends FormBase {
       $ret = $callback->cid;
     }
     else {
-      $id = db_insert('empty_page')
+      $id = \Drupal::database()->insert('empty_page')
         ->fields([
           'path' => $callback->path,
           'page_title' => $callback->page_title,

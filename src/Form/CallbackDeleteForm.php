@@ -70,7 +70,7 @@ class CallbackDeleteForm extends ConfirmFormBase {
    */
   public static function emptyPageDeleteCallback($cid) {
     if (is_numeric($cid)) {
-      db_delete('empty_page')
+      \Drupal::database()->delete('empty_page')
         ->condition('cid', $cid)
         ->execute();
     }

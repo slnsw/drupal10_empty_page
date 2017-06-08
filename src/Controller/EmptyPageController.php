@@ -60,7 +60,7 @@ class EmptyPageController {
    */
   public static function emptyPageGetCallbacks() {
     $callbacks = [];
-    $results = db_select('empty_page')
+    $results = \Drupal::database()->select('empty_page')
       ->fields('empty_page', ['cid',
         'path',
         'page_title',
