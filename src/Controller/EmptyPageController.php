@@ -28,7 +28,7 @@ class EmptyPageController {
         $view_url = Url::fromRoute('empty_page.page_' . $cid);
         $edit_url = Url::fromRoute('empty_page.edit_callback', ['cid' => $cid]);
         $delete_url = Url::fromRoute('empty_page.delete_callback', ['cid' => $cid]);
-        $title = $callback->page_title ?: 'No title';
+        $title = $callback['page_title'] ?: t('No title');
         $row    = [
           \Drupal::l($title, $view_url),
           Link::fromTextAndUrl(t('Edit'), $edit_url),
@@ -59,21 +59,15 @@ class EmptyPageController {
    *   An Array of Callbacks.
    */
   public static function emptyPageGetCallbacks() {
-    $callbacks = [];
-    $results = \Drupal::database()->select('empty_page')
-      ->fields('empty_page', ['cid',
-        'path',
-        'page_title',
-        'data',
-        'changed',
-        'created',
-      ])
-      ->orderBy('changed', 'DESC')
-      ->execute();
-    foreach ($results as $callback) {
-      $callbacks[$callback->cid] = $callback;
+    $settings = \Drupal::configFactory()->get('empty_page.settings')->getRawData();
+    $results = [];
+
+    foreach ($settings as $key => $val) {
+      if (substr($key, 0, 9) == 'callback_') {
+        $results[$val['cid']] = $val;
+      }
     }
-    return $callbacks;
+    return $results;
   }
 
 }

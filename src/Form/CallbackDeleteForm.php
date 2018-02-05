@@ -25,7 +25,7 @@ class CallbackDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to delete the callback for <em>:path</em>?', [':path' => $this->callback->path]);
+    return $this->t('Are you sure you want to delete the callback for <em>:path</em>?', [':path' => $this->callback['path']]);
   }
 
   /**
@@ -46,7 +46,8 @@ class CallbackDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $cid = NULL) {
-    $callback = CallbackForm::emptyPageGetCallback($cid);
+    $settings = \Drupal::configFactory()->get('empty_page.settings');
+    $callback = $settings->get('callback_' . $cid);
     $this->callback = $callback;
     return parent::buildForm($form, $form_state);
   }
@@ -56,24 +57,10 @@ class CallbackDeleteForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $callback = $this->callback;
-    self::emptyPageDeleteCallback($callback->cid);
+    \Drupal::configFactory()->getEditable('empty_page.settings')->clear('callback_' . $callback['cid'])->save();
     \Drupal::service('router.builder')->rebuild();
-    drupal_set_message(t('Callback <em>:path</em> deleted.', [':path' => $callback->path]));
+    drupal_set_message($this->t('Callback <em>:path</em> deleted.', [':path' => $callback->path]));
     $form_state->setRedirect('empty_page.administration');
-  }
-
-  /**
-   * Delete an Empty Page callback.
-   *
-   * @param int $cid
-   *   The callback id.
-   */
-  public static function emptyPageDeleteCallback($cid) {
-    if (is_numeric($cid)) {
-      \Drupal::database()->delete('empty_page')
-        ->condition('cid', $cid)
-        ->execute();
-    }
   }
 
 }

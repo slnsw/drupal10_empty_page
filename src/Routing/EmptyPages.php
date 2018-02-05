@@ -16,17 +16,19 @@ class EmptyPages {
   public function routes() {
     $routes = [];
     $callbacks = EmptyPageController::emptyPageGetCallbacks();
-    foreach ($callbacks as $cid => $callback) {
-      $routes['empty_page.page_' . $cid] = new Route(
-        $callback->path,
-        [
-          '_controller' => '\Drupal\empty_page\Controller\EmptyPage::emptyCallback',
-          '_title' => $callback->page_title,
-        ],
-        [
-          '_permission'  => 'view empty pages',
-        ]
-      );
+    if (!empty($callbacks)) {
+      foreach ($callbacks as $cid => $callback) {
+        $routes['empty_page.page_' . $cid] = new Route(
+          $callback->path,
+          [
+            '_controller' => '\Drupal\empty_page\Controller\EmptyPage::emptyCallback',
+            '_title' => $callback['page_title'],
+          ],
+          [
+            '_permission'  => 'view empty pages',
+          ]
+        );
+      }
     }
     return $routes;
   }
