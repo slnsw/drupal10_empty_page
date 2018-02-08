@@ -19,7 +19,7 @@ class EmptyPages {
     if (!empty($callbacks)) {
       foreach ($callbacks as $cid => $callback) {
         $routes['empty_page.page_' . $cid] = new Route(
-          $callback->path,
+          $callback['path'],
           [
             '_controller' => '\Drupal\empty_page\Controller\EmptyPage::emptyCallback',
             '_title' => $callback['page_title'],
