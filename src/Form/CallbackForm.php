@@ -82,15 +82,15 @@ class CallbackForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     $new = FALSE;
-    $id = $this->cid;
     $settings = $this->config('empty_page.settings');
 
-    if (!$id) {
+    if (empty($this->cid)) {
       $new = TRUE;
       $id = $this->config('empty_page.settings')->get('new_id');
       $callback['created'] = REQUEST_TIME;
     }
     else {
+      $id = $this->cid;
       $callback['created'] = $settings->get('callback_' . $id)['created'];
     }
 
